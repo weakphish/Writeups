@@ -2,7 +2,7 @@
 This challenge is from PicoCTF 2021. It's labelled "Reverse Engineering," but I'd regard it as more PWN since traditional RE involves binaries.
 
 ## Running the program
-Running the provided program, ``keygenme-trial.py , shows us a simple terminal interface for a... magic program? We can see part of it is "locked" behind a "paywall," which is likely our target. Let's inspect the code!"
+Running the provided program, `keygenme-trial.py` , shows us a simple terminal interface for a... magic program? We can see part of it is "locked" behind a "paywall," which is likely our target. Let's inspect the code!
 
 ## Code inspection
 At the very top of the python file, we can see a few globals:
@@ -20,7 +20,7 @@ key_part_static1_trial = "picoCTF{1n_7h3_|<3y_of_"
 key_part_dynamic1_trial = "xxxxxxxx"
 key_part_static2_trial = "}"
 key_full_template_trial = key_part_static1_trial + key_part_dynamic1_trial + key_part_static2_trial
-``
+```
 
 See anything interesting? It looks like they define the flag format and thene allow part of it to be dynamic, then concatenate it all together.
 
