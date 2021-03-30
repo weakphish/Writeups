@@ -20,9 +20,54 @@ key_part_static1_trial = "picoCTF{1n_7h3_|<3y_of_"
 key_part_dynamic1_trial = "xxxxxxxx"
 key_part_static2_trial = "}"
 key_full_template_trial = key_part_static1_trial + key_part_dynamic1_trial + key_part_static2_trial
-```
+``
+
 See anything interesting? It looks like they define the flag format and thene allow part of it to be dynamic, then concatenate it all together.
 
 Looking further down, we find a function called `check_key(key, username_trial)` 
 
 Inspecting this, we see that it checks it against the length of the `key_full_template_trial` and returns false if it is not the right size. After that is where it gets interesting. 
+
+It appears to check the first little bit of the user provided key against the static parts of the key template, i.e. `picoCTF{1n_7h3_|<3y_of_` and then does a... manual for loop? On the rest. 
+
+For each character in the user provided portion of the key, it checks it against the `sha256(username_trial).hexdigest()[x]` where `x` is an integer value. Here's the full code below:
+
+```
+# Check dynamic part --v
+if key[i] != hashlib.sha256(username_trial).hexdigest()[4]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[5]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[3]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[6]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[2]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[7]:
+    return False
+ else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[1]:
+    return False
+else:
+    i += 1
+if key[i] != hashlib.sha256(username_trial).hexdigest()[8]:
+   return False
+```
+
+Now, remember, `username_trial` is defined as MORTON. So, what we need to do is take the `sha256("MORTON").hexdigest()` and create a key where the corresponding indices are in the given order (4, 5, 3, 6, 2, 7, 1, 8)
+
+In this directory you will find my solve script.
+
+Hope this helped!
