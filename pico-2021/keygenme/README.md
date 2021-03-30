@@ -7,7 +7,7 @@ Running the provided program, `keygenme-trial.py` , shows us a simple terminal i
 ## Code inspection
 At the very top of the python file, we can see a few globals:
 
-```
+```python
 # GLOBALS --v
 arcane_loop_trial = True
 jump_into_full = False
@@ -32,7 +32,7 @@ It appears to check the first little bit of the user provided key against the st
 
 For each character in the user provided portion of the key, it checks it against the `sha256(username_trial).hexdigest()[x]` where `x` is an integer value. Here's the full code below:
 
-```
+```python
 # Check dynamic part --v
 if key[i] != hashlib.sha256(username_trial).hexdigest()[4]:
     return False
