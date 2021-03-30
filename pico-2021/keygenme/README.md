@@ -66,6 +66,8 @@ if key[i] != hashlib.sha256(username_trial).hexdigest()[8]:
    return False
 ```
 
+## Solving
+
 Now, remember, `username_trial` is defined as MORTON. So, what we need to do is take the `sha256("MORTON").hexdigest()` and create a key where the corresponding indices are in the given order (4, 5, 3, 6, 2, 7, 1, 8)
 
 In this directory you will find my solve script.
